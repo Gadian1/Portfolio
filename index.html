@@ -473,13 +473,13 @@
             <div class="contact-item"><i class="fab fa-linkedin-in"></i><a href="https://www.linkedin.com/in/gadian-moraes" target="_blank">linkedin.com/in/gadian-moraes</a></div>
           </div>
         </div>
-        <form class="contact-form fade-in" id="contactForm">
+        <form class="contact-form fade-in" id="contactForm" action="https://formspree.io/f/meepgpbk" method="POST">
           <div class="form-row">
-            <div class="form-group"><label>Nome</label><input type="text" placeholder="Seu nome" required spellcheck="true" /></div>
-            <div class="form-group"><label>E-mail</label><input type="email" placeholder="seu@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Digite um e-mail válido (ex: nome@dominio.com)" spellcheck="false" autocomplete="email" inputmode="email" /></div>
+            <div class="form-group"><label>Nome</label><input type="text" name="nome" placeholder="Seu nome" required spellcheck="true" /></div>
+            <div class="form-group"><label>E-mail</label><input type="email" name="email" placeholder="seu@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Digite um e-mail válido (ex: nome@dominio.com)" spellcheck="false" autocomplete="email" inputmode="email" /></div>
           </div>
-          <div class="form-group"><label>Assunto</label><input type="text" placeholder="Sobre o que você quer falar?" /></div>
-          <div class="form-group"><label>Mensagem</label><textarea rows="5" placeholder="Escreva sua mensagem..." required spellcheck="true" lang="pt"></textarea></div>
+          <div class="form-group"><label>Assunto</label><input type="text" name="assunto" placeholder="Sobre o que você quer falar?" /></div>
+          <div class="form-group"><label>Mensagem</label><textarea rows="5" name="mensagem" placeholder="Escreva sua mensagem..." required spellcheck="true" lang="pt"></textarea></div>
           <button type="submit" class="btn btn-primary full-width">Enviar Mensagem <i class="fas fa-paper-plane"></i></button>
         </form>
       </div>
