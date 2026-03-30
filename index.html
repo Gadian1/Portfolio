@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gadian Luca Correa Moraes | Dados & BI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    a { text-decoration: none; color: inherit; }
+    img { max-width: 100%; display: block; }
+
+    :root {
+      --bg:        #080c14;
+      --bg2:       #0d1623;
+      --bg3:       #111a2e;
+      --blue:      #2563eb;
+      --cyan:      #06b6d4;
+      --glow:      rgba(37,99,235,.45);
+      --glow-cyan: rgba(6,182,212,.35);
+      --text:      #f0f4ff;
+      --text2:     #7a90b8;
+      --border:    rgba(37,99,235,.2);
+      --radius:    14px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grade pontilhada tech */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(37,99,235,.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(37,99,235,.05) 1px, transparent 1px);
+      background-size: 44px 44px;
+      z-index: 0; pointer-events: none;
+    }
+
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: var(--blue); border-radius: 99px; }
+
+    #particles { position: fixed; top:0; left:0; width:100%; height:100%; z-index:0; pointer-events:none; }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display: flex; align-items: center; justify-content: center;
+      padding: 0 2.5rem; height: 64px;
+      background: rgba(8,12,20,.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand { display:flex; align-items:center; gap:.5rem; font-weight:700; font-size:.95rem; }
+    .nav-square { width:12px; height:12px; background:var(--blue); border-radius:3px; box-shadow:0 0 10px var(--glow); }
+    .nav-name { color:var(--text); font-weight:700; }
+    .nav-divider { color:var(--text2); font-weight:300; }
+    .nav-role { color:var(--text2); font-size:.82rem; }
+    .nav-links { display:flex; list-style:none; gap:2rem; }
+    .nav-link { font-size:.78rem; font-weight:600; letter-spacing:.08em; color:var(--text2); transition:color .2s; position:relative; padding-bottom:4px; }
+    .nav-link::after { content:''; position:absolute; bottom:0; left:0; width:0; height:2px; background:var(--cyan); border-radius:2px; transition:width .2s; }
+    .nav-link:hover, .nav-link.active { color:var(--cyan); }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    .hamburger { display:none; flex-direction:column; gap:5px; background:none; border:none; cursor:pointer; padding:4px; }
+    .hamburger span { display:block; width:22px; height:2px; background:var(--text); border-radius:2px; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      padding-top: 64px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero > .container { animation: slideUp .7s .1s ease both; width: 100%; }
+
+    /* Badge disponível */
+    .available-badge {
+      display: inline-flex; align-items: center; gap: .45rem;
+      background: rgba(6,182,212,.08); border: 1px solid rgba(6,182,212,.3);
+      color: var(--cyan); font-size: .68rem; font-weight: 700; letter-spacing: .1em;
+      padding: .3rem .9rem; border-radius: 99px; margin-bottom: 1.4rem;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .available-dot { width: 6px; height: 6px; background: var(--cyan); border-radius: 50%; animation: pulse-cyan 1.5s ease infinite; }
+    @keyframes pulse-cyan { 0%,100%{box-shadow:0 0 0 0 rgba(6,182,212,.6)} 50%{box-shadow:0 0 0 5px rgba(6,182,212,0)} }
+
+    /* Saudação pequena */
+    .hero-greeting {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .88rem; color: var(--text2);
+      letter-spacing: .12em; margin-bottom: .5rem;
+    }
+
+    /* Nome gigante estilo editorial */
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5.5rem, 13vw, 14rem);
+      font-weight: 400;
+      letter-spacing: .02em;
+      line-height: .88;
+      margin-bottom: .6rem;
+      position: relative;
+      animation: glitch 9s steps(1) infinite;
+    }
+
+    /* Gradiente tech no nome */
+    .name-gradient {
+      background: linear-gradient(160deg, #ffffff 0%, #b8d4ff 40%, #06b6d4 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      filter: drop-shadow(0 0 28px rgba(37,99,235,.55)) drop-shadow(0 0 65px rgba(6,182,212,.28));
+      animation: nameGlow 4s ease-in-out infinite alternate;
+      display: inline-block;
+    }
+
+    @keyframes nameGlow {
+      0%   { filter: drop-shadow(0 0 18px rgba(37,99,235,.35)) drop-shadow(0 0 45px rgba(6,182,212,.12)); }
+      100% { filter: drop-shadow(0 0 55px rgba(37,99,235,.9))  drop-shadow(0 0 110px rgba(6,182,212,.55)); }
+    }
+
+    /* Ponto ciano pulsante */
+    .hero-title .accent {
+      color: var(--cyan);
+      text-shadow: 0 0 25px rgba(6,182,212,.6), 0 0 55px rgba(6,182,212,.3);
+      animation: dotPulse 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes dotPulse {
+      0%   { text-shadow: 0 0 18px rgba(6,182,212,.45), 0 0 40px rgba(6,182,212,.18); }
+      100% { text-shadow: 0 0 40px rgba(6,182,212,.95), 0 0 80px rgba(6,182,212,.6), 0 0 130px rgba(6,182,212,.28); }
+    }
+
+    /* Glitch sutil a cada ~9s */
+    @keyframes glitch {
+      0%, 87%, 100% { transform: none; }
+      88%            { transform: translate(-4px, 0) skewX(-.6deg); }
+      89%            { transform: translate(4px,  0) skewX(.6deg);  }
+      90%            { transform: translate(-2px, 0); }
+      91%            { transform: none; }
+    }
+
+    /* Cargo */
+    .hero-role-line {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: .78rem; font-weight: 600;
+      color: var(--cyan); letter-spacing: .2em;
+      text-transform: uppercase; margin-bottom: 2.5rem;
+    }
+
+    /* Divisão inferior: bio à esq, KPIs à dir */
+    .hero-bottom { display: flex; gap: 4rem; align-items: flex-end; justify-content: space-between; }
+    .hero-bottom-left { flex: 1; max-width: 780px; }
+
+    /* Redes sociais */
+    .hero-socials { display:flex; gap:.5rem; margin-bottom: 1.25rem; }
+    .social-link { width:38px; height:38px; border-radius:10px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; color:var(--text2); font-size:.88rem; transition:all .2s; background:rgba(255,255,255,.02); }
+    .social-link:hover { color:var(--cyan); border-color:var(--cyan); box-shadow:0 0 12px var(--glow-cyan); background:rgba(6,182,212,.06); }
+
+    /* Resumo */
+    .hero-summary {
+      font-size: 1.15rem; color: var(--text2); line-height: 1.8;
+      margin-bottom: 1.5rem;
+      border-left: 2px solid var(--blue); padding-left: 1rem;
+    }
+    .hero-summary strong { color: var(--cyan); font-weight: 600; }
+
+    /* Botões */
+    .btn { display:inline-flex; align-items:center; gap:.5rem; padding:.75rem 1.75rem; font-family:inherit; font-size:.8rem; font-weight:700; letter-spacing:.08em; border-radius:99px; cursor:pointer; transition:all .2s; border:2px solid transparent; }
+    .btn-primary { background:var(--blue); color:#fff; border-color:var(--blue); box-shadow:0 0 20px var(--glow); }
+    .btn-primary:hover { background:#1d4ed8; box-shadow:0 0 30px var(--glow); transform:translateY(-2px); }
+    .btn-outline { background:transparent; color:var(--text); border-color:var(--border); }
+    .btn-outline:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 16px var(--glow-cyan); transform:translateY(-2px); }
+    .hero-buttons { display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.25rem; }
+
+    /* Chips */
+    .hero-chips { display:flex; flex-wrap:wrap; gap:.6rem; }
+    .chip { display:inline-flex; align-items:center; gap:.45rem; background:rgba(37,99,235,.08); color:var(--text2); font-size:.82rem; font-weight:600; padding:.4rem 1.1rem; border-radius:99px; border:1px solid var(--border); transition:all .2s; }
+    .chip:hover { border-color:var(--cyan); color:var(--cyan); }
+    .chip i { color:var(--blue); font-size:.78rem; }
+
+    /* KPI stats — minimalistas, à direita */
+    .hero-kpis { display: flex; flex-direction: column; gap: 1.5rem; align-items: flex-end; flex-shrink: 0; }
+    .kpi-stat { text-align: right; }
+    .kpi-stat-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 3.5rem); color: var(--text); display: block; line-height: 1; letter-spacing: .03em; }
+    .kpi-stat-lbl { font-family: 'JetBrains Mono', monospace; font-size: .6rem; font-weight: 700; color: var(--text2); letter-spacing: .15em; text-transform: uppercase; }
+
+    /* ===== SECTIONS ===== */
+    .section { padding:100px 0 80px; position:relative; z-index:1; }
+    .section-alt { background:var(--bg2); }
+    .container { max-width:1100px; margin:0 auto; padding:0 2rem; }
+    .section-header { text-align:center; margin-bottom:3.5rem; }
+    .section-tag { display:inline-block; font-size:.7rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase; color:var(--cyan); margin-bottom:.75rem; font-family:'JetBrains Mono',monospace; }
+    .section-title { font-family:'Bebas Neue',sans-serif; font-size:clamp(2.5rem,5vw,3.5rem); font-weight:400; letter-spacing:.06em; color:var(--text); }
+    .section-line { width:48px; height:2px; background:linear-gradient(90deg,var(--blue),var(--cyan)); border-radius:99px; margin:1rem auto 0; box-shadow:0 0 10px var(--glow-cyan); }
+
+    /* Timeline */
+    .cv-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+    .cv-column-title { font-size:.95rem; font-weight:700; margin-bottom:1.5rem; display:flex; align-items:center; gap:.6rem; color:var(--text); }
+    .cv-column-title i { color:var(--cyan); }
+    .timeline { position:relative; padding-left:1.5rem; }
+    .timeline::before { content:''; position:absolute; left:6px; top:6px; bottom:0; width:1px; background:var(--border); }
+    .timeline-item { position:relative; margin-bottom:2rem; }
+    .timeline-dot { position:absolute; left:-1.5rem; top:6px; width:13px; height:13px; border-radius:50%; background:var(--bg); border:2px solid var(--blue); box-shadow:0 0 8px var(--glow); }
+    .timeline-date { font-size:.7rem; font-weight:600; color:var(--cyan); letter-spacing:.05em; display:block; margin-bottom:.2rem; font-family:'JetBrains Mono',monospace; }
+    .timeline-content h4 { font-size:.92rem; font-weight:700; margin-bottom:.15rem; color:var(--text); }
+    .timeline-company { display:block; font-size:.78rem; font-weight:500; color:var(--text2); margin-bottom:.5rem; }
+    .timeline-list { list-style:none; display:flex; flex-direction:column; gap:.3rem; }
+    .timeline-list li { font-size:.8rem; color:var(--text2); padding-left:.9rem; position:relative; line-height:1.5; }
+    .timeline-list li::before { content:'▸'; position:absolute; left:0; color:var(--blue); font-size:.65rem; top:2px; }
+
+    .certs-list { display:flex; flex-direction:column; gap:.7rem; }
+    .cert-item { display:flex; align-items:flex-start; gap:.6rem; font-size:.82rem; color:var(--text2); }
+    .cert-dot { width:6px; height:6px; border-radius:50%; background:var(--blue); box-shadow:0 0 6px var(--glow); flex-shrink:0; margin-top:5px; }
+    .cert-badge { display:inline-block; font-size:.63rem; font-weight:700; padding:.15rem .55rem; border-radius:99px; margin-left:.4rem; vertical-align:middle; font-family:'JetBrains Mono',monospace; }
+    .cert-badge.done { background:rgba(22,163,74,.15); color:#4ade80; border:1px solid rgba(22,163,74,.3); }
+    .cert-badge.wip  { background:rgba(234,179,8,.1); color:#fbbf24; border:1px solid rgba(234,179,8,.25); }
+
+    .skills-section { display:flex; flex-direction:column; gap:.5rem; }
+    .skills-label { font-size:.68rem; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--text2); margin-top:.75rem; margin-bottom:.25rem; font-family:'JetBrains Mono',monospace; }
+    .skills-grid { display:flex; flex-wrap:wrap; gap:.4rem; }
+    .skill-tag { background:rgba(37,99,235,.1); color:var(--cyan); font-size:.7rem; font-weight:600; padding:.28rem .8rem; border-radius:99px; border:1px solid rgba(6,182,212,.2); font-family:'JetBrains Mono',monospace; }
+
+    /* Projects */
+    .projects-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:1.5rem; }
+    .project-card { background:var(--bg2); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; transition:all .25s; }
+    .project-card:hover { border-color:var(--cyan); box-shadow:0 0 30px rgba(6,182,212,.1), 0 20px 40px rgba(0,0,0,.3); transform:translateY(-6px); }
+    .project-img-wrapper { height:150px; display:flex; align-items:center; justify-content:center; }
+    .bi-gradient     { background:linear-gradient(135deg,#1e3a8a,#1d4ed8); }
+    .purple-gradient { background:linear-gradient(135deg,#4c1d95,#7c3aed); }
+    .teal-gradient   { background:linear-gradient(135deg,#0f766e,#0891b2); }
+    .project-icon { font-size:2.5rem; color:rgba(255,255,255,.25); }
+    .project-info { padding:1.4rem; }
+    .project-tags { display:flex; gap:.4rem; flex-wrap:wrap; margin-bottom:.65rem; }
+    .project-tag { font-size:.65rem; font-weight:700; color:var(--cyan); background:rgba(6,182,212,.08); padding:.18rem .6rem; border-radius:99px; border:1px solid rgba(6,182,212,.2); font-family:'JetBrains Mono',monospace; }
+    .project-title { font-size:.95rem; font-weight:700; margin-bottom:.45rem; color:var(--text); }
+    .project-desc { font-size:.8rem; color:var(--text2); line-height:1.55; margin-bottom:1rem; }
+    .project-links { display:flex; gap:.75rem; }
+    .project-link { font-size:.8rem; font-weight:600; color:var(--text2); display:flex; align-items:center; gap:.35rem; transition:color .2s; }
+    .project-link:hover, .project-link.primary { color:var(--cyan); }
+
+    /* Contact */
+    .contact-grid { display:grid; grid-template-columns:1fr 1.5fr; gap:4rem; align-items:start; }
+    .contact-intro { font-size:.95rem; color:var(--text2); margin-bottom:2rem; line-height:1.7; }
+    .contact-items { display:flex; flex-direction:column; gap:1rem; }
+    .contact-item { display:flex; align-items:center; gap:.85rem; font-size:.86rem; color:var(--text2); }
+    .contact-item i { width:34px; height:34px; background:rgba(37,99,235,.12); color:var(--cyan); border-radius:8px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.8rem; flex-shrink:0; }
+    .contact-item a { color:var(--text2); transition:color .2s; }
+    .contact-item a:hover { color:var(--cyan); }
+    .contact-form { display:flex; flex-direction:column; gap:1rem; }
+    .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+    .form-group { display:flex; flex-direction:column; gap:.4rem; }
+    .form-group label { font-size:.75rem; font-weight:600; color:var(--text2); font-family:'JetBrains Mono',monospace; letter-spacing:.05em; }
+    .form-group input, .form-group textarea { font-family:inherit; font-size:.88rem; padding:.75rem 1rem; border:1px solid var(--border); border-radius:10px; background:var(--bg2); color:var(--text); outline:none; transition:border-color .2s,box-shadow .2s; resize:none; }
+    .form-group input:focus, .form-group textarea:focus { border-color:var(--cyan); box-shadow:0 0 0 3px rgba(6,182,212,.1); }
+    .form-group input::placeholder, .form-group textarea::placeholder { color:var(--text2); opacity:.5; }
+    .full-width { width:100%; justify-content:center; }
+
+    /* Footer */
+    .footer { background:var(--bg2); border-top:1px solid var(--border); color:var(--text); padding:2rem; }
+    .footer-content { max-width:1100px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem; }
+    .footer-brand { display:flex; align-items:center; gap:.5rem; font-weight:700; }
+    .footer-copy { font-size:.78rem; color:var(--text2); font-family:'JetBrains Mono',monospace; }
+    .footer-socials { display:flex; gap:.6rem; }
+    .footer-socials a { width:32px; height:32px; border-radius:8px; border:1px solid var(--border); display:flex; align-items:center; justify-content:center; font-size:.8rem; color:var(--text2); transition:all .2s; }
+    .footer-socials a:hover { border-color:var(--cyan); color:var(--cyan); box-shadow:0 0 10px var(--glow-cyan); }
+
+    @keyframes slideUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    .fade-in { opacity:0; transform:translateY(20px); transition:opacity .6s ease,transform .6s ease; }
+    .fade-in.visible { opacity:1; transform:translateY(0); }
+
+    @media (max-width:900px) {
+      .hero-grid { flex-direction:column; gap:2rem; }
+      .hero-right { flex-direction:row; flex-wrap:wrap; width:100%; }
+      .cv-grid { grid-template-columns:1fr; }
+      .contact-grid { grid-template-columns:1fr; gap:2.5rem; }
+    }
+    @media (max-width:640px) {
+      .navbar { padding:0 1.25rem; }
+      .nav-links { display:none; flex-direction:column; position:absolute; top:64px; left:0; right:0; background:rgba(8,12,20,.97); border-bottom:1px solid var(--border); padding:1rem 1.5rem; gap:1rem; }
+      .nav-links.open { display:flex; }
+      .hamburger { display:flex; }
+      .form-row { grid-template-columns:1fr; }
+      .footer-content { flex-direction:column; text-align:center; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="particles"></canvas>
+
+  <nav class="navbar" id="navbar">
+    <ul class="nav-links">
+      <li><a href="#sobre" class="nav-link active">SOBRE MIM</a></li>
+      <li><a href="#curriculo" class="nav-link">CURRÍCULO</a></li>
+      <li><a href="#projetos" class="nav-link">PROJETOS</a></li>
+      <li><a href="#contato" class="nav-link">CONTATO</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </nav>
+
+  <section id="sobre" class="section hero">
+    <div class="container">
+
+      <!-- Badge + saudação -->
+      <div class="available-badge"><span class="available-dot"></span>ABERTO A OPORTUNIDADES</div>
+      <p class="hero-greeting">Olá, sou o</pp>
+
+      <!-- Nome gigante -->
+      <h1 class="hero-title"><span class="name-gradient">GADIAN<br>MORAES</span><span class="accent">.</span></h1>
+      <p class="hero-role-line">Analyst de Business Intelligence Jr.</p>
+
+      <!-- Inferior: bio + botões à esq, KPIs à dir -->
+      <div class="hero-bottom">
+        <div class="hero-bottom-left">
+          <div class="hero-socials">
+            <a href="https://gadian1.github.io/gadian.github.io./" target="_blank" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/gadian-moraes" target="_blank" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+            <a href="mailto:gadianluca16@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
+            <a href="tel:+5511975906063" class="social-link"><i class="fas fa-phone"></i></a>
+          </div>
+          <p class="hero-summary">
+            Vim da área de <strong>Infraestrutura</strong> de TI, onde passei os últimos 3 anos, e hoje aplico essa base técnica para organizar e analisar dados. Meu trabalho é transformar números brutos em dashboards que façam sentido para o negócio, usando <strong>Power BI</strong>, <strong>SQL</strong> e <strong>Python</strong>. Curto o desafio de pegar um problema de dados e entregar uma visão clara.
+          </p>
+          <div class="hero-buttons">
+            <a href="#curriculo" class="btn btn-primary">CURRÍCULO</a>
+            <a href="#projetos" class="btn btn-outline">PROJETOS</a>
+          </div>
+          <div class="hero-chips">
+            <span class="chip"><i class="fas fa-chart-bar"></i> Power BI</span>
+            <span class="chip"><i class="fas fa-database"></i> SQL</span>
+            <span class="chip"><i class="fab fa-python"></i> Python</span>
+            <span class="chip"><i class="fas fa-server"></i> Infraestrutura</span>
+          </div>
+        </div>
+
+        <!-- KPIs minimalistas à direita -->
+        <div class="hero-kpis">
+          <div class="kpi-stat">
+            <span class="kpi-stat-num">7+</span>
+            <span class="kpi-stat-lbl">Dashboards</span>
+          </div>
+          <div class="kpi-stat">
+            <span class="kpi-stat-num">4+</span>
+            <span class="kpi-stat-lbl">Anos em TI</span>
+          </div>
+          <div class="kpi-stat">
+            <span class="kpi-stat-num">5</span>
+            <span class="kpi-stat-lbl">Empresas</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="curriculo" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// trajetoria.json</span>
+        <h2 class="section-title">CURRÍCULO</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="cv-grid">
+        <div class="cv-column fade-in">
+          <h3 class="cv-column-title"><i class="fas fa-briefcase"></i> Experiência</h3>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jul 2025 — Atualmente</span><h4>Analyst de Business Intelligence Júnior</h4><span class="timeline-company">Renova Invest</span><ul class="timeline-list"><li>Criação e manutenção de painéis interativos no Power BI com KPIs estratégicos</li><li>ETL integrando dados do Salesforce para análise e relatórios</li><li>Automação de processos operacionais, eliminando tarefas manuais repetitivas</li></ul></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Out 2024 — Jun 2025</span><h4>Analista de Infraestrutura</h4><span class="timeline-company">Cavalera</span><ul class="timeline-list"><li>Gestão de suporte técnico às lojas e monitoramento do ERP Visual Linx</li><li>Administração de servidores Windows e SQL Server</li><li>Desenvolvimento de 7 dashboards no Power BI para o time comercial</li></ul></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Dez 2023 — Out 2024</span><h4>Técnico de Apoio ao Usuário</h4><span class="timeline-company">7 Oliveiras</span><ul class="timeline-list"><li>Suporte técnico local e remoto de múltiplos níveis de complexidade</li><li>Implantação de Windows Server com Active Directory</li><li>Projetos de redes TCP/IP v4, cabeamento CAT5/CAT6</li></ul></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Abr 2023 — Out 2023</span><h4>Analista de Desenvolvimento de Sistemas</h4><span class="timeline-company">Construtora Kamilos</span><ul class="timeline-list"><li>Customizações no sistema TOTVS RM (módulos financeiro e RH)</li><li>Levantamento de requisitos, relatórios personalizados e parametrizações</li></ul></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jan 2022 — Fev 2023</span><h4>Auxiliar de Informática</h4><span class="timeline-company">Exército Brasileiro – SFPC/2</span><ul class="timeline-list"><li>Manutenção preventiva e corretiva de computadores e periféricos</li><li>Suporte a videoconferências com equipamentos CISCO</li></ul></div></div>
+          </div>
+        </div>
+        <div class="cv-column fade-in">
+          <h3 class="cv-column-title"><i class="fas fa-graduation-cap"></i> Educação</h3>
+          <div class="timeline">
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jul 2023 — Dez 2025</span><h4>Análise e Desenvolvimento de Sistemas</h4><span class="timeline-company">UNICID – Universidade Cidade de São Paulo</span></div></div>
+            <div class="timeline-item"><div class="timeline-dot"></div><div class="timeline-content"><span class="timeline-date">Jan 2021 — Jun 2023</span><h4>Engenharia da Computação</h4><span class="timeline-company">USJT – Universidade São Judas Tadeu</span></div></div>
+          </div>
+          <h3 class="cv-column-title" style="margin-top:2.5rem"><i class="fas fa-certificate"></i> Certificações</h3>
+          <div class="certs-list">
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Power BI</strong> — EBAC <span class="cert-badge done">Concluído</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Análise de Dados</strong> — EBAC <span class="cert-badge wip">Cursando</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Inteligência Artificial</strong> — EBAC <span class="cert-badge wip">Cursando</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>AWS Academy Cloud Foundations</strong> — Amazon Web Services <span class="cert-badge done">Concluído</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Fundamentos de TI: Hardware e Software</strong> — Fundação Bradesco <span class="cert-badge done">Concluído</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Introdução a Redes de Computadores</strong> — Fundação Bradesco <span class="cert-badge done">Concluído</span></div></div>
+            <div class="cert-item"><span class="cert-dot"></span><div><strong>Administrando Banco de Dados</strong> — Fundação Bradesco <span class="cert-badge done">Concluído</span></div></div>
+          </div>
+          <h3 class="cv-column-title" style="margin-top:2.5rem"><i class="fas fa-code"></i> Habilidades</h3>
+          <div class="skills-section">
+            <p class="skills-label">Visualização de Dados</p>
+            <div class="skills-grid"><span class="skill-tag">Power BI</span><span class="skill-tag">Google Sheets</span></div>
+            <p class="skills-label">Análise & Manipulação</p>
+            <div class="skills-grid"><span class="skill-tag">SQL</span><span class="skill-tag">Excel</span><span class="skill-tag">Python</span><span class="skill-tag">Databricks</span></div>
+            <p class="skills-label">Versionamento & Cloud</p>
+            <div class="skills-grid"><span class="skill-tag">Git</span><span class="skill-tag">Salesforce</span></div>
+            <p class="skills-label">Idiomas</p>
+            <div class="skills-grid"><span class="skill-tag">Português — Nativo</span><span class="skill-tag">Inglês — Intermediário</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="projetos" class="section section-alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// projetos/</span>
+        <h2 class="section-title">PROJETOS & DASHBOARDS</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="projects-grid">
+        <div class="project-card fade-in">
+          <div class="project-img-wrapper bi-gradient"><i class="fas fa-chart-pie project-icon"></i></div>
+          <div class="project-info">
+            <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">Salesforce</span><span class="project-tag">ETL</span></div>
+            <h3 class="project-title">Dashboard BI – Renova Invest</h3>
+            <p class="project-desc">Painéis interativos de KPIs estratégicos integrados ao Salesforce via ETL, apoiando a tomada de decisão das áreas de negócio.</p>
+            <div class="project-links"><a href="https://www.linkedin.com/in/gadian-moraes" target="_blank" class="project-link primary"><i class="fab fa-linkedin-in"></i> Ver no LinkedIn</a></div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-img-wrapper purple-gradient"><i class="fas fa-store project-icon"></i></div>
+          <div class="project-info">
+            <div class="project-tags"><span class="project-tag">Power BI</span><span class="project-tag">SQL Server</span></div>
+            <h3 class="project-title">7 Dashboards Comerciais – Cavalera</h3>
+            <p class="project-desc">7 relatórios analíticos no Power BI para o time comercial, identificando locais com maior força de vendas.</p>
+            <div class="project-links"><a href="https://www.linkedin.com/in/gadian-moraes" target="_blank" class="project-link primary"><i class="fab fa-linkedin-in"></i> Ver no LinkedIn</a></div>
+          </div>
+        </div>
+        <div class="project-card fade-in">
+          <div class="project-img-wrapper teal-gradient"><i class="fas fa-robot project-icon"></i></div>
+          <div class="project-info">
+            <div class="project-tags"><span class="project-tag">Python</span><span class="project-tag">Automação</span></div>
+            <h3 class="project-title">Automação de Processos Operacionais</h3>
+            <p class="project-desc">Rotinas de validação de bases de dados e automação com Python, aumentando a confiabilidade das entregas analíticas.</p>
+            <div class="project-links"><a href="https://www.linkedin.com/in/gadian-moraes" target="_blank" class="project-link primary"><i class="fab fa-linkedin-in"></i> Ver no LinkedIn</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contato" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-tag">// ping gadian</span>
+        <h2 class="section-title">CONTATO</h2>
+        <div class="section-line"></div>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info fade-in">
+          <p class="contact-intro">Tem uma oportunidade, projeto ou quer trocar uma ideia sobre dados e BI? Me chama!</p>
+          <div class="contact-items">
+            <div class="contact-item"><i class="fas fa-envelope"></i><a href="mailto:gadianluca16@gmail.com">gadianluca16@gmail.com</a></div>
+            <div class="contact-item"><i class="fas fa-phone"></i><a href="tel:+5511975906063">(11) 97590-6063</a></div>
+            <div class="contact-item"><i class="fas fa-map-marker-alt"></i><span>São Paulo – SP, Brasil</span></div>
+            <div class="contact-item"><i class="fab fa-linkedin-in"></i><a href="https://www.linkedin.com/in/gadian-moraes" target="_blank">linkedin.com/in/gadian-moraes</a></div>
+          </div>
+        </div>
+        <form class="contact-form fade-in" id="contactForm">
+          <div class="form-row">
+            <div class="form-group"><label>Nome</label><input type="text" placeholder="Seu nome" required spellcheck="true" /></div>
+            <div class="form-group"><label>E-mail</label><input type="email" placeholder="seu@email.com" required pattern="[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}" title="Digite um e-mail válido (ex: nome@dominio.com)" spellcheck="false" autocomplete="email" inputmode="email" /></div>
+          </div>
+          <div class="form-group"><label>Assunto</label><input type="text" placeholder="Sobre o que você quer falar?" /></div>
+          <div class="form-group"><label>Mensagem</label><textarea rows="5" placeholder="Escreva sua mensagem..." required spellcheck="true" lang="pt"></textarea></div>
+          <button type="submit" class="btn btn-primary full-width">Enviar Mensagem <i class="fas fa-paper-plane"></i></button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-brand"><span class="nav-square"></span><span>Gadian Luca Correa Moraes</span></div>
+      <p class="footer-copy">© 2026 · Dados & Business Intelligence · São Paulo, BR</p>
+      <div class="footer-socials">
+        <a href="https://www.linkedin.com/in/gadian-moraes" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+        <a href="mailto:gadianluca16@gmail.com"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+  <script>
+    const frases = ['Júnior em Power BI, Python e SQL.','Transformo dados em decisões estratégicas.','Dashboards que contam histórias com dados.','Analista de BI apaixonado por dados.'];
+    const el = document.getElementById('typesubtitle');
+    let fi=0,ci=0,del=false;
+    function type(){
+      const f=frases[fi];
+      if(!del){ci++;el.innerHTML=f.slice(0,ci)+'<span class="typewriter-cursor"></span>';if(ci===f.length){del=true;setTimeout(type,2200);return;}}
+      else{ci--;el.innerHTML=f.slice(0,ci)+'<span class="typewriter-cursor"></span>';if(ci===0){del=false;fi=(fi+1)%frases.length;}}
+      setTimeout(type,del?40:70);
+    }
+    type();
+    const navbar=document.getElementById('navbar');
+    window.addEventListener('scroll',()=>navbar.classList.toggle('scrolled',window.scrollY>20));
+    const hamburger=document.getElementById('hamburger');
+    const navList=document.querySelector('.nav-links');
+    hamburger.addEventListener('click',()=>navList.classList.toggle('open'));
+    navList.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>navList.classList.remove('open')));
+    const fadeEls=document.querySelectorAll('.fade-in,.timeline-item,.project-card');
+    const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
+    fadeEls.forEach(el=>obs.observe(el));
+    const form=document.getElementById('contactForm');
+    if(form){form.addEventListener('submit',e=>{e.preventDefault();const btn=form.querySelector('button[type="submit"]');btn.textContent='Mensagem enviada!';btn.style.background='#16a34a';setTimeout(()=>{btn.innerHTML='Enviar Mensagem <i class="fas fa-paper-plane"></i>';btn.style.background='';form.reset();},3000);});}
+  </script>
+</body>
+</html>
