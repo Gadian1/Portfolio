@@ -8,9 +8,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>emailjs.init("vB9Q_3dvsP1RFvAlp");</script>
-
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
@@ -460,7 +457,7 @@
         <h2 class="section-title">CONTATO</h2>
         <div class="section-line"></div>
       </div>
-      <div class="contact-simple fade-in">
+      <div class="contact-simple">
         <p class="contact-intro">Tem uma oportunidade, projeto ou quer trocar uma ideia sobre dados e BI? Me chama!</p>
         <div class="contact-buttons">
           <a href="mailto:gadianluca16@gmail.com" class="btn btn-primary"><i class="fas fa-envelope"></i> Enviar E-mail</a>
@@ -508,8 +505,6 @@
     const fadeEls=document.querySelectorAll('.fade-in,.timeline-item,.project-card');
     const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
     fadeEls.forEach(el=>obs.observe(el));
-    const form=document.getElementById('contactForm');
-    if(form){form.addEventListener('submit',function(e){e.preventDefault();const btn=form.querySelector('button[type="submit"]');btn.textContent='Enviando...';btn.disabled=true;const params={nome:form.querySelector('[name="nome"]').value,email:form.querySelector('[name="email"]').value,assunto:form.querySelector('[name="assunto"]').value,mensagem:form.querySelector('[name="mensagem"]').value};emailjs.send('service_0plihje','template_yqr1ea8',params).then(function(){btn.textContent='Mensagem enviada!';btn.style.background='#16a34a';setTimeout(()=>{btn.innerHTML='Enviar Mensagem <i class="fas fa-paper-plane"></i>';btn.style.background='';btn.disabled=false;form.reset();},3000);},function(){btn.textContent='Erro ao enviar. Tente novamente.';btn.style.background='#dc2626';btn.disabled=false;setTimeout(()=>{btn.innerHTML='Enviar Mensagem <i class="fas fa-paper-plane"></i>';btn.style.background='';},3000);});});}
   </script>
 </body>
 </html>
